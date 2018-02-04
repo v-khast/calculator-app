@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "SimpleCalc",
+    "slug": "simplecalc",
+    "sdkVersion": "23.0.0",
+    "privacy": "public",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "primaryColor": "#2c434a",
+    "loading": {
+      "backgroundColor": "#2c434a"
+    }
+  }
+}

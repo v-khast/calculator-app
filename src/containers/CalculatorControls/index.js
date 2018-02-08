@@ -4,20 +4,17 @@ import { connect } from "react-redux";
 import CalculatorButton from "../../components/CalculatorButton";
 import styles from "./styles";
 import { createStructuredSelector } from "reselect";
-import {clearEntry, operandInput, operationInput, toggleNegation, allClear, calculateResult} from "./actions";
-import {selectCalculatorState} from "./selectors";
+import { clearEntry, operandInput, operationInput, toggleNegation, allClear, calculateResult } from "./actions";
+import { selectCurrentOperand } from "./selectors";
 
 class CalculatorControls extends Component {
 
     render() {
 
-        const { onCalculateResult, onClearEntry, onAllClear, onToggleNegation, onDigitInput, onOperationInput,
-            calculatorState: { currentOperand, expression, resultWasCalculated }
-        } = this.props;
+        const { onCalculateResult, onClearEntry, onAllClear, onToggleNegation,
+            onDigitInput, onOperationInput, currentOperand } = this.props;
         const periodIsPresent = currentOperand.indexOf('.') > -1;
-        const waitForNumber =
-            currentOperand === '' ||
-            currentOperand === '-' ||
+        const waitForNumber = currentOperand === '' || currentOperand === '-' ||
             currentOperand[currentOperand.length-1] === '.';
 
         return (
@@ -26,14 +23,14 @@ class CalculatorControls extends Component {
                     <CalculatorButton
                         style={[styles.box, styles.green]}
                         content="C"
-                        onPress={() => onClearEntry(currentOperand, expression, resultWasCalculated)}
+                        onPress={onClearEntry}
                         onLongPress={onAllClear}
                     />
                     <CalculatorButton
                         style={[styles.box, styles.green]}
                         content="+/-"
                         disabled={currentOperand === '.'}
-                        onPress={() => onToggleNegation(currentOperand, expression)}
+                        onPress={onToggleNegation}
                     />
                     <CalculatorButton
                         style={[styles.box, styles.green]}
@@ -143,7 +140,7 @@ class CalculatorControls extends Component {
                         style={[styles.box, styles.green]}
                         content="="
                         disabled={waitForNumber}
-                        onPress={() => onCalculateResult([...expression, parseFloat(currentOperand)])}
+                        onPress={onCalculateResult}
                     />
                 </View>
             </View>
@@ -152,7 +149,7 @@ class CalculatorControls extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-    calculatorState: selectCalculatorState,
+    currentOperand: selectCurrentOperand,
 });
 
 const mapDispatchToProps = {

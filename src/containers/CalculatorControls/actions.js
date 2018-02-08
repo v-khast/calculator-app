@@ -1,5 +1,6 @@
 import * as types from './constants'
 
+
 export const allClear = () => ({
     type: types.ALL_CLEAR,
 });
@@ -15,67 +16,51 @@ export const operationInput = operation => ({
 });
 
 export const toggleNegation = (currentOperand, expression) => {
-    const action = {
-        type: types.TOGGLE_NEGATION,
-        payload: {}
-    };
-    const setPayload = (currentOperand, periodIsPresent, waitForNumber) => {
-        action.payload.currentOperand = currentOperand;
-        action.payload.periodIsPresent = periodIsPresent;
-        action.payload.waitForNumber = waitForNumber;
-    };
     if ( currentOperand !== '' && currentOperand !== '-' ) {
-        const newCurrentOperand = (-1 * currentOperand).toString();
-        setPayload(newCurrentOperand, newCurrentOperand.indexOf('.') > -1, false);
+        return {
+            type: types.TOGGLE_NEGATION,
+            payload: (-1 * currentOperand).toString()
+        };
     } else {
         const maybeZero = expression.length > 0 ? '' : '0';
-        const newCurrentOperand = currentOperand === '' ? '-' : maybeZero;
-        setPayload(newCurrentOperand, false, true);
+        return {
+            type: types.TOGGLE_NEGATION,
+            payload: currentOperand === '' ? '-' : maybeZero
+        };
     }
-    return action;
 };
 
 export const clearEntry = (currentOperand, expression, resultWasCalculated) => {
-    const action = {
-        type: types.CLEAR_ENTRY,
-        payload: {}
-    };
-    const setPayload = (currentOperand, expression, waitForNumber, periodIsPresent, resultWasCalculated) => {
-        action.payload.currentOperand = currentOperand;
-        action.payload.expression = expression;
-        action.payload.waitForNumber = waitForNumber;
-        action.payload.periodIsPresent = periodIsPresent;
-        action.payload.resultWasCalculated = resultWasCalculated;
-    };
     if ( resultWasCalculated || (currentOperand.length === 1 && expression.length === 0) ) {
-        setPayload('0', [], false, false, true);
+        return {
+            type: types.CLEAR_ENTRY,
+            payload: {
+                currentOperand: '0',
+                expression: [],
+                resultWasCalculated: true,
+            }
+        };
     } else if ( currentOperand !== '' ) {
         // clear a number entry
-        const updatedCurrentOperand = currentOperand.slice(0, -1);
-        const currentOperandIsTooShort = currentOperand.length === 1 ||
-            ( currentOperand.length === 2 && currentOperand.indexOf('-') > -1 );
-        setPayload(
-            updatedCurrentOperand,
-            expression,
-            updatedCurrentOperand === "." || currentOperandIsTooShort,
-            updatedCurrentOperand.indexOf('.') > -1,
-            false
-        );
+        return {
+            type: types.CLEAR_ENTRY,
+            payload: {
+                currentOperand: currentOperand.slice(0, -1),
+                expression: expression,
+                resultWasCalculated: false,
+            }
+        };
     } else {
         // clear an operation entry
-        const updatedCurrentOperand =
-            expression
-                .slice( expression.length - 2, expression.length - 1 )
-                .toString();
-        setPayload(
-            updatedCurrentOperand,
-            expression.slice(0, -2),
-            false,
-            updatedCurrentOperand.indexOf('.') > -1,
-            false
-        );
+        return {
+            type: types.CLEAR_ENTRY,
+            payload: {
+                currentOperand: expression.slice( expression.length - 2, expression.length - 1 ).toString(),
+                expression: expression.slice(0, -2),
+                resultWasCalculated: false,
+            }
+        };
     }
-    return action;
 };
 
 /**
@@ -85,7 +70,6 @@ export const clearEntry = (currentOperand, expression, resultWasCalculated) => {
  * @returns calculationResult
  */
 
-// todo: refactor.
 export const calculateResult = (expression) => {
     const operatorGroups = [
         {
@@ -136,15 +120,17 @@ export const calculateResult = (expression) => {
         alert('Error: unable to resolve calculation');
     }
 
+    const finalResult = parseFloat(answer[0].toFixed(12));
+
     return {
         type: types.CALCULATE_RESULT,
         payload: {
-            result: answer[0].toString(),
+            result: finalResult.toString(),
             historyItem: {
                 key: [
                     ...expression,
                     '=',
-                    answer[0]
+                    finalResult
                 ].join(' ')
             }
         }

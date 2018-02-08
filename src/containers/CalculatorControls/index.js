@@ -12,8 +12,13 @@ class CalculatorControls extends Component {
     render() {
 
         const { onCalculateResult, onClearEntry, onAllClear, onToggleNegation, onDigitInput, onOperationInput,
-            calculatorState: { waitForNumber, periodIsPresent, currentOperand, expression, resultWasCalculated }
+            calculatorState: { currentOperand, expression, resultWasCalculated }
         } = this.props;
+        const periodIsPresent = currentOperand.indexOf('.') > -1;
+        const waitForNumber =
+            currentOperand === '' ||
+            currentOperand === '-' ||
+            currentOperand[currentOperand.length-1] === '.';
 
         return (
             <View style={styles.controls}>

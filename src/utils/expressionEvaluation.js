@@ -4,7 +4,7 @@
  * @param expression - array of operands and operators
  * @returns calculation result
  */
-const expressionEvaluation = (expression) => {
+export const expressionEvaluation = (expression) => {
     const operatorGroups = [
         {
             '*': (a, b) => a * b,
@@ -56,4 +56,23 @@ const expressionEvaluation = (expression) => {
     return parseFloat(answer[0].toFixed(12));
 };
 
-export default expressionEvaluation;
+export const performToggleNegation = (currentOperand, expression) => {
+    if ( currentOperand !== '' && currentOperand !== '-' ) {
+        return (-1 * currentOperand).toString();
+    }
+    const maybeZero = expression.length > 0 ? '' : '0';
+    return currentOperand === '' ? '-' : maybeZero;
+};
+
+export const performClearEntry = (currentOperand, expression) => {
+    if ( currentOperand !== '' ) {
+        return {
+            currentOperand: currentOperand.slice(0, -1),
+            expression: expression
+        };
+    }
+    return {
+        currentOperand: expression.slice( expression.length - 2, expression.length - 1 ).toString(),
+        expression: expression.slice(0, -2)
+    };
+};

@@ -1,5 +1,5 @@
 import { OPERAND_INPUT, OPERATION_INPUT, TOGGLE_NEGATION, CLEAR_ENTRY, ALL_CLEAR, CALCULATE_RESULT } from "./constants"
-import expressionEvaluation from "../../utils/expressionEvaluation";
+import { expressionEvaluation, performClearEntry, performToggleNegation } from "../../utils/expressionEvaluation";
 
 const initialState = {
     currentOperand: '0',
@@ -30,13 +30,7 @@ export default function calculator(state = initialState, action) {
         }
 
         case TOGGLE_NEGATION: {
-            let updatedCurrentOperand = '';
-            if ( state.currentOperand !== '' && state.currentOperand !== '-' ) {
-                updatedCurrentOperand = (-1 * state.currentOperand).toString();
-            } else {
-                const maybeZero = state.expression.length > 0 ? '' : '0';
-                updatedCurrentOperand = state.currentOperand === '' ? '-' : maybeZero;
-            }
+            const updatedCurrentOperand = performToggleNegation(state.currentOperand, state.expression);
             return {
                 ...state,
                 currentOperand: updatedCurrentOperand,
@@ -45,25 +39,17 @@ export default function calculator(state = initialState, action) {
         }
 
         case CLEAR_ENTRY: {
-            let updatedCurrentOperand = initialState.currentOperand;
-            let updatedExpression = initialState.expression;
             if ( state.resultWasCalculated || (state.currentOperand.length === 1 && state.expression.length === 0) ) {
                 return {
                     ...initialState,
                     history: state.history,
                 }
-            } else if ( state.currentOperand !== '' ) {
-                updatedCurrentOperand = state.currentOperand.slice(0, -1);
-                updatedExpression = state.expression;
-            } else {
-                updatedCurrentOperand =
-                    state.expression.slice( state.expression.length - 2, state.expression.length - 1 ).toString();
-                updatedExpression = state.expression.slice(0, -2);
             }
+            const { currentOperand, expression } = performClearEntry(state.currentOperand, state.expression);
             return {
                 ...state,
-                currentOperand: updatedCurrentOperand,
-                expression: updatedExpression,
+                currentOperand: currentOperand,
+                expression: expression,
                 resultWasCalculated: false
             }
         }

@@ -5,16 +5,18 @@ import styles from './styles';
 class CalculatorButton extends Component {
 
   static defaultProps = {
-      disabled: false,
-    };
+    disabled: false,
+  };
 
   render() {
     const { content, onPress, onLongPress, style, disabled } = this.props;
     return (
-        <TouchableOpacity style={style}
-                          onPress={onPress} onLongPress={onLongPress} disabled={disabled} >
-          <Text style={styles.text}>{content}</Text>
-        </TouchableOpacity>
+      <TouchableOpacity style={style}
+                        onPress={onPress}
+                        onLongPress={onLongPress}
+                        disabled={disabled} >
+        <Text style={styles.text}>{content}</Text>
+      </TouchableOpacity>
     );
   }
 

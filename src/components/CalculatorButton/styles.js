@@ -1,10 +1,10 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   text: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 32,
-  }
+  },
 });
 
 export default styles;

@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux'
-import calculator from './src/containers/CalculatorControls/reducer'
+import { combineReducers } from 'redux';
+import calculator from './src/containers/CalculatorControls/reducer';
 
 const rootReducer = combineReducers({
-    calculatorState: calculator,
+  calculatorState: calculator,
 });
 
-export default rootReducer
+export default rootReducer;

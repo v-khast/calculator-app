@@ -1,13 +1,13 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-    question: {
-        color: "#fafafa",
-        fontSize: 16,
-        marginTop: 25,
-        padding: 10,
-        textAlign: "right"
-    }
+  question: {
+    color: '#fafafa',
+    fontSize: 16,
+    marginTop: 25,
+    padding: 10,
+    textAlign: 'right',
+  },
 });
 
 export default styles;

@@ -22,13 +22,15 @@
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
     "test": "jest",
-    "test:watch": "npm test -- --watch"
+    "test:watch": "npm test -- --watch",
+    "lint": "eslint ./src"
   },
   "jest": {
     "preset": "jest-expo"
   },
   "dependencies": {
     "expo": "^23.0.0",
+    "prop-types": "^15.6.1",
     "react": "16.0.0",
     "react-native": "0.50.3",
     "react-redux": "^5.0.6",

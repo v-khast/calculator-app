@@ -21,23 +21,23 @@ export const expressionEvaluation = (expression) => {
   const calculationResult = (input) => operatorGroups.reduce((result, operatorGroup) =>
 
   // make calculations for each operation within precedence group
-  result.input.reduce((newCalculationData, inputValue) => {
-    if (operatorGroup[inputValue]) {
-      return {
-        ...newCalculationData,
-        currentOperator: operatorGroup[inputValue],
-      };
-    } else if (newCalculationData.currentOperator) {
-      const newInput = newCalculationData.input.map((previousValue, index) =>
-        index === newCalculationData.input.length - 1 ?
-          newCalculationData.currentOperator(previousValue, inputValue) :
-          previousValue
-      );
-      return {
-        input: newInput,
-        currentOperator: null,
-      };
-    } else {
+    result.input.reduce((newCalculationData, inputValue) => {
+      if (operatorGroup[inputValue]) {
+        return {
+          ...newCalculationData,
+          currentOperator: operatorGroup[inputValue],
+        };
+      } else if (newCalculationData.currentOperator) {
+        const newInput = newCalculationData.input.map((previousValue, index) =>
+          index === newCalculationData.input.length - 1 ?
+            newCalculationData.currentOperator(previousValue, inputValue) :
+            previousValue,
+        );
+        return {
+          input: newInput,
+          currentOperator: null,
+        };
+      }
       return {
         ...newCalculationData,
         input: [
@@ -45,14 +45,9 @@ export const expressionEvaluation = (expression) => {
           inputValue,
         ],
       };
-    }
-  }, { input: [], currentOperator: null }), input);
+    }, { input: [], currentOperator: null }), input);
 
   const answer = calculationResult({ input: expression, currentOperator: null }).input;
-
-  if (answer.length > 1) {
-    alert('Error: unable to resolve calculation');
-  }
 
   return parseFloat(answer[0].toFixed(12));
 };
@@ -70,7 +65,7 @@ export const performClearEntry = (currentOperand, expression) => {
   if (currentOperand !== '') {
     return {
       currentOperand: currentOperand.slice(0, -1),
-      expression: expression,
+      expression,
     };
   }
 

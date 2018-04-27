@@ -1,25 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Text } from 'react-native';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import styles from './styles';
 import { selectExpression, selectCurrentOperand } from '../CalculatorControls/selectors';
-import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
 
-class Expression extends Component {
-  render() {
-    const { expression, currentOperand } = this.props;
-    return (
-      <Text numberOfLines={1} style={styles.question}>
-        {`${expression.join(' ')} ${currentOperand}`}
-      </Text>
-    );
-  }
-}
+const Expression = (props) => {
+  const { expression, currentOperand } = props;
+  return (
+    <Text numberOfLines={1} style={styles.question}>
+      {`${expression.join(' ')} ${currentOperand}`}
+    </Text>
+  );
+};
+
+Expression.propTypes = {
+  expression: PropTypes.array.isRequired,
+  currentOperand: PropTypes.string.isRequired,
+};
 
 const mapStateToProps = createStructuredSelector({
   expression: selectExpression,
   currentOperand: selectCurrentOperand,
 });
 
-EnhancedExpession = connect(mapStateToProps)(Expression);
-export default EnhancedExpession;
+const EnhancedExpression = connect(mapStateToProps)(Expression);
+export default EnhancedExpression;

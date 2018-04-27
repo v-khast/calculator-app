@@ -23,15 +23,15 @@ describe('calculator reducer', () => {
         {
           type: types.OPERAND_INPUT,
           payload: '4',
-        }
-      )
+        },
+      ),
     ).toEqual(
       {
         currentOperand: '4',
         expression: [],
         history: [],
         resultWasCalculated: false,
-      }
+      },
     );
 
     expect(
@@ -45,15 +45,15 @@ describe('calculator reducer', () => {
         {
           type: types.OPERAND_INPUT,
           payload: '2',
-        }
-      )
+        },
+      ),
     ).toEqual(
       {
         currentOperand: '42',
         expression: [],
         history: [],
         resultWasCalculated: false,
-      }
+      },
     );
   });
 
@@ -69,15 +69,15 @@ describe('calculator reducer', () => {
         {
           type: types.OPERATION_INPUT,
           payload: '*',
-        }
-      )
+        },
+      ),
     ).toEqual(
       {
         currentOperand: '',
         expression: [42, '*'],
         history: [],
         resultWasCalculated: false,
-      }
+      },
     );
   });
 
@@ -92,15 +92,15 @@ describe('calculator reducer', () => {
         },
         {
           type: types.TOGGLE_NEGATION,
-        }
-      )
+        },
+      ),
     ).toEqual(
       {
         currentOperand: '-3',
         expression: [42, '*'],
         history: [],
         resultWasCalculated: false,
-      }
+      },
     );
 
     expect(
@@ -113,15 +113,15 @@ describe('calculator reducer', () => {
         },
         {
           type: types.TOGGLE_NEGATION,
-        }
-      )
+        },
+      ),
     ).toEqual(
       {
         currentOperand: '3',
         expression: [42, '*'],
         history: [],
         resultWasCalculated: false,
-      }
+      },
     );
 
     expect(
@@ -134,15 +134,15 @@ describe('calculator reducer', () => {
         },
         {
           type: types.TOGGLE_NEGATION,
-        }
-      )
+        },
+      ),
     ).toEqual(
       {
         currentOperand: '0',
         expression: [42, '*'],
         history: [],
         resultWasCalculated: false,
-      }
+      },
     );
   });
 
@@ -157,15 +157,15 @@ describe('calculator reducer', () => {
         },
         {
           type: types.CLEAR_ENTRY,
-        }
-      )
+        },
+      ),
     ).toEqual(
       {
         currentOperand: '0',
         expression: [],
         history: [],
         resultWasCalculated: true,
-      }
+      },
     );
 
     expect(
@@ -178,15 +178,15 @@ describe('calculator reducer', () => {
         },
         {
           type: types.CLEAR_ENTRY,
-        }
-      )
+        },
+      ),
     ).toEqual(
       {
         currentOperand: '0',
         expression: [],
         history: [],
         resultWasCalculated: true,
-      }
+      },
     );
 
     expect(
@@ -199,15 +199,15 @@ describe('calculator reducer', () => {
         },
         {
           type: types.CLEAR_ENTRY,
-        }
-      )
+        },
+      ),
     ).toEqual(
       {
         currentOperand: '4',
         expression: [],
         history: [],
         resultWasCalculated: false,
-      }
+      },
     );
 
     expect(
@@ -220,15 +220,15 @@ describe('calculator reducer', () => {
         },
         {
           type: types.CLEAR_ENTRY,
-        }
-      )
+        },
+      ),
     ).toEqual(
       {
         currentOperand: '42',
         expression: [],
         history: [],
         resultWasCalculated: false,
-      }
+      },
     );
   });
 
@@ -243,15 +243,15 @@ describe('calculator reducer', () => {
         },
         {
           type: types.ALL_CLEAR,
-        }
-      )
+        },
+      ),
     ).toEqual(
       {
         currentOperand: '0',
         expression: [],
         history: [],
         resultWasCalculated: true,
-      }
+      },
     );
   });
 
@@ -266,15 +266,15 @@ describe('calculator reducer', () => {
         },
         {
           type: types.CALCULATE_RESULT,
-        }
-      )
+        },
+      ),
     ).toEqual(
       {
         currentOperand: '2',
         expression: [],
         history: [{ key: '42 * 2 / 42 = 2' }],
         resultWasCalculated: true,
-      }
+      },
     );
 
     expect(
@@ -287,15 +287,15 @@ describe('calculator reducer', () => {
         },
         {
           type: types.CALCULATE_RESULT,
-        }
-      )
+        },
+      ),
     ).toEqual(
       {
         currentOperand: '5',
         expression: [],
         history: [{ key: '2 + 3 = 5' }, { key: '42 * 2 / 42 = 2' }],
         resultWasCalculated: true,
-      }
+      },
     );
   });
 });

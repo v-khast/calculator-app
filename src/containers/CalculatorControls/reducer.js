@@ -11,9 +11,7 @@ const initialState = {
 };
 
 export default function calculator(state = initialState, action) {
-
   switch (action.type) {
-
     case OPERAND_INPUT: {
       return {
         ...state,
@@ -55,8 +53,8 @@ export default function calculator(state = initialState, action) {
         performClearEntry(state.currentOperand, state.expression);
       return {
         ...state,
-        currentOperand: currentOperand,
-        expression: expression,
+        currentOperand,
+        expression,
         resultWasCalculated: false,
       };
     }
@@ -82,5 +80,4 @@ export default function calculator(state = initialState, action) {
     default:
       return state;
   }
-
 }
